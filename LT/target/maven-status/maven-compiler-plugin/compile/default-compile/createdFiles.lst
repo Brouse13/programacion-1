@@ -1,2 +1,4 @@
-es\unai\LT.class
 es\unai\Palabra.class
+es\unai\PalabraFileReader.class
+es\unai\PalabraFileWriter.class
+es\unai\LT.class

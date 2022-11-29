@@ -1,7 +1,5 @@
 package es.unai;
 
-import java.util.Arrays;
-
 /**
  * Palabras class is used to simplify the use of Strings in Programacion1 classes
  */
@@ -113,6 +111,20 @@ public class Palabra {
     }
 
     /**
+     * Return if the word is a palindromo
+     * @return
+     */
+    public boolean isPalindromo() {
+        //Loop throw all the word in pairs
+        for (int i = 0, f = wordSize - 1; i < f; i++, f--) {
+            if (word[i] != word[f]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Convert the stored word in UpperCase
      */
     public void toUpperCase() {
@@ -121,6 +133,26 @@ public class Palabra {
                 word[i] = ((char) (word[i] - 32));
             }
         }
+    }
+
+    /**
+     * Add a new character to the word
+     * @param character character to add
+     */
+    public void addCharacter(char character) {
+        //STORE THE NEW CHARACTER
+        word[wordSize] = character;
+        //INCREASE WORD SIZE
+        wordSize++;
+    }
+
+    /**
+     * Get the character stores on the word index {@param index}
+     * @param index indes to get
+     * @return the character on the given index
+     */
+    public char getCharacter(int index) {
+        return (word[index]);
     }
 
     /**
@@ -207,5 +239,18 @@ public class Palabra {
         }
 
         return resultado;
+    }
+
+    public boolean equals(Palabra palabra) {
+        if (palabra.wordSize != wordSize) {
+            return false;
+        }
+
+        for (int i = 0; i < palabra.wordSize; i++) {
+            if (palabra.word[i] != word[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
