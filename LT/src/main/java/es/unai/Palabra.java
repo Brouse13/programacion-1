@@ -10,6 +10,7 @@ public class Palabra {
     private static final char END_LINE = '.';
     //SPACE CHARACTER
     private static final char SPACE = ' ';
+    private static final char NEW_LINE = '\n';
     //CURRENTLY CHARACTER READ
     private static char character = SPACE;
 
@@ -22,9 +23,27 @@ public class Palabra {
         wordSize = 0;
     }
 
+    public Palabra(char[] word) {
+        wordSize = 0;
+        for (int i = 0; i < word.length; i++) {
+            addCharacter(word[i]);
+        }
+    }
+
     public static boolean existWords() {
         searchWord();
-        return (character != END_LINE);
+
+        if ((character != END_LINE) && (character != NEW_LINE)) {
+            return true;
+        }else {
+            //vaciar buffer de entrada
+            if (character == END_LINE) {
+                LT.skipLine();
+            }
+            character = SPACE;
+            //devolver false como resultado de este método
+            return false;
+        }
     }
 
     //declaración método privado buscarPalabra que lleva cabo la búsqueda
@@ -110,6 +129,10 @@ public class Palabra {
         }
     }
 
+    public char[] getCharacters() {
+        return copyArray(word);
+    }
+
     /**
      * Return if the word is a palindromo
      * @return
@@ -122,6 +145,30 @@ public class Palabra {
             }
         }
         return true;
+    }
+
+    /**
+     * Encode the word using Cesar encode. The displacing of each character is
+     * determined by {@param displacement}
+     * @param displacement times to displace each character
+     */
+    public Palabra cesarEncode(int displacement) {
+        final char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+
+        char[] encoded = new char[wordSize];
+
+        //Loop throw all the characters
+        for (int i = 0; i < wordSize; i++) {
+            int index = 0;
+
+            //Get the index of the character on the alphabet
+            while (word[i] != ALPHABET[index]) {
+                index++;
+            }
+
+            encoded[i] = ALPHABET[(index + displacement) % ALPHABET.length];
+        }
+        return new Palabra(encoded);
     }
 
     /**
